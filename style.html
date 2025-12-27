@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        :root {
+            --primary: #ff3e6c;
+            --glass: rgba(255, 255, 255, 0.15);
+            --text: #ffffff;
+        }
+
+        body {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        /* The Player Card */
+        .player-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            color: var(--text);
+        }
+
+        /* Album Art Animation */
+        .album-art {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 4px solid var(--glass);
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Interactive Logic via Checkboxes */
+        .state-handler { display: none; }
+
+        /* Rotate Art when Playing */
+        #play-toggle:checked ~ .album-art {
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Song Titles */
+        .info h2 { margin: 10px 0 5px; font-size: 1.4rem; }
+        .info p { opacity: 0.7; font-size: 0.9rem; margin-bottom: 25px; }
+
+        /* Controls Layout */
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .btn {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            font-size: 1.5rem;
+        }
+
+        .btn:hover { transform: scale(1.1); opacity: 0.8; }
+
+        /* Play/Pause Toggle Logic */
+        .pause-icon { display: none; }
+
+        #play-toggle:checked ~ .controls .play-icon { display: none; }
+        #play-toggle:checked ~ .controls .pause-icon { display: inline-block; }
+        #play-toggle:checked ~ .controls .btn-main {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Heart/Like Toggle Logic */
+        #like-toggle:checked ~ .controls .btn-like {
+            color: var(--primary);
+            animation: heart-pop 0.3s ease;
+        }
+
+        @keyframes heart-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* Progress Bar (Visual Only) */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 40%;
+            height: 100%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="player-card">
+        <input type="checkbox" id="play-toggle" class="state-handler">
+        <input type="checkbox" id="like-toggle" class="state-handler">
+
+        <div class="album-art">
+            <img src="https://picsum.photos/400/400" alt="Album Art">
+        </div>
+
+        <div class="info">
+            <h2>Midnight City</h2>
+            <p>M83 — Hurry Up, We're Dreaming</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <div class="controls">
+            <label for="like-toggle" class="btn btn-like">♥</label>
+            
+            <span class="btn">⏮</span>
+            
+            <label for="play-toggle" class="btn btn-main">
+                <span class="play-icon">▶</span>
+                <span class="pause-icon">❙❙</span>
+            </label>
+            
+            <span class="btn">⏭</span>
+            
+            <span class="btn">🔁</span>
+        </div>
+    </div>
+
+</body>
+</html>
